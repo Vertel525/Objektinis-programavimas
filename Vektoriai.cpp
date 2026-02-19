@@ -45,22 +45,23 @@ int main() {
     cout << " 1 - ivedimas ranka" << endl;
     cout << " 2 - generuojami pazymiai" << endl;
     cout << " 3 - generuojami studentai ir pazymiai" << endl;
-    cout << " 4 - baigti darba" << endl;
-    cin>>pasirinkimas;
+    cout << " 4 - baigti darba ";
 
-    if (pasirinkimas == 1) {
-        inranka(grupe);
-    }
-    if (pasirinkimas == 2) {
-        randpazymiai(grupe);
-    }
-    if (pasirinkimas == 3) {
-        random(grupe);
-    }
-    if (pasirinkimas == 4) {
-        return 0;
-    }
+        cin >> pasirinkimas;
+        if (pasirinkimas == 1) {
+            inranka(grupe);
+        }
+        if (pasirinkimas == 2) {
+            randpazymiai(grupe);
+        }
+        if (pasirinkimas == 3) {
+            random(grupe);
+        }
+        if (pasirinkimas == 4) {
+            return 0;
+        }
 
+    
     outputas(grupe, rez);
 }
 
@@ -69,14 +70,14 @@ void inranka(vector <Studentas>& grupe) {
     while (true) {
         Studentas A;
         int sum = 0;
-        cout << "Iveskite studento vardo ir pavarde. Norint baigti studentu ivedima, iveskite 0: ";
+        cout << "Iveskite studento vardo ir pavarde. Norint baigti studentu ivedima, iveskite 0: " << endl;
         cin >> A.vardas >> A.pavarde;
 
         if (A.vardas == "0" || A.pavarde == "0") {
             break;
         }
         int temp;
-        cout << "Iveskite pazymius nuo 1 iki 10. Norint baigti pazymiu ivedima, iveskite 0: ";
+        cout << "Iveskite pazymius nuo 1 iki 10. Norint baigti pazymiu ivedima, iveskite 0: " << endl;
 
         while (true) {
             if (cin >> temp) {
@@ -88,23 +89,23 @@ void inranka(vector <Studentas>& grupe) {
                     sum += temp;
                 }
                 else {
-                    cout << "Neteisingas pazymys, iveskite 1-10 arba 0: ";
+                    cout << "Neteisingas pazymys, iveskite 1-10 arba 0: " << endl;
                 }
             }
             else {
-                cout << "Neteisingas ivedimas, iveskite skaiciu: ";
+                cout << "Neteisingas ivedimas, iveskite skaiciu: " << endl;
                 cin.clear();
                 cin.ignore(10000, '\n');
             }
         }
 
-        cout << "Iveskite egzamino rezultata: ";
+        cout << "Iveskite egzamino rezultata: " << endl;
         while (true) {
             if (cin >> A.egz && A.egz >= 1 && A.egz <= 10) {
                 break;
             }
             else {
-                cout << "Neteisingas ivedimas, iveskite skaiciu nuo 1 iki 10: ";
+                cout << "Neteisingas ivedimas, iveskite skaiciu nuo 1 iki 10: " << endl;
                 cin.clear();
                 cin.ignore(10000, '\n');
             }
@@ -135,14 +136,14 @@ void randpazymiai(vector <Studentas>& grupe) {
     while (true) {
         Studentas A;
         int sum = 0;
-        cout << "Iveskite studento vardo ir pavarde. Norint baigti studentu ivedima, iveskite 0: ";
+        cout << "Iveskite studento vardo ir pavarde. Norint baigti studentu ivedima, iveskite 0: " << endl;
         cin >> A.vardas >> A.pavarde;
 
         if (A.vardas == "0" || A.pavarde == "0") {
             break;
         }
         int kiek;
-        cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: ";
+        cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: " << endl;
         cin >> kiek;
 
         for (int i = 0; i < kiek; i++) {
@@ -178,7 +179,7 @@ void random(vector <Studentas>& grupe) {
    
         Studentas A;
         int kiek1, sum = 0;
-        cout << "Kiek studentu sugeneruoti? ";
+        cout << "Kiek studentu sugeneruoti? " << endl;
         cin >> kiek1;
 
         for (int i = 0; i < kiek1; i++) {
@@ -186,7 +187,7 @@ void random(vector <Studentas>& grupe) {
             A.pavarde = pavardes[rand() % pavardes.size()];
 
             int kiek;
-            cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: ";
+            cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: " << endl;
             cin >> kiek;
 
             for (int j = 0; j < kiek; j++) {
@@ -217,14 +218,14 @@ void random(vector <Studentas>& grupe) {
 }
 
 void outputas(const vector<Studentas>& grupe, char &rez) {
-    cout << "Rezultata isvesti su mediana(irasyti M arba m) ar vidurkiu(irasyti V arba v)";
+    cout << "Rezultata isvesti su mediana(irasyti M arba m) ar vidurkiu(irasyti V arba v): " << endl;
     cin >> rez;
     while (true) {
         if (rez == 'V' || rez == 'v' || rez == 'M' || rez == 'm') {
             break;
         }
         else {
-            cout << "Neteisingas ivedimas, iveskite v arba m: ";
+            cout << "Neteisingas ivedimas, iveskite v arba m: " << endl;
             cin.clear();
             cin.ignore(10000, '\n');
         }
