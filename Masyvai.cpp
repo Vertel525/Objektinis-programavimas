@@ -29,7 +29,7 @@ struct Studentas {
 const string vardai[10] = { "Kazys", "Petriukas", "Alfonsas", "Jonas", "Dziugas", "Algis", "Eugenija", "Agne", "Vitalija","Anastasija" };
 const string pavardes[10] = { "Ilgauskas", "Javtokas", "Katunskyte", "Audrinis", "Milinskas", "Aleksandravicius", "Siskauskas", "Grybauskaite", "Meilutyte", "Cmilyte" };
 
-void inranka(Studentas *&grupe);
+void inranka(Studentas *&grupe, int &kiek);
 void randpazymiai(Studentas* &grupe);
 void random(Studentas* &grupe);
 void outputas(const Studentas* &grupe, char& rez);
@@ -81,11 +81,13 @@ void pushback(Studentas *&grupe, int &kiek, Studentas &A){
     kiek++;
 }
 
-void inranka(Studentas *&grupe) {
+void inranka(Studentas *&grupe, int &kiek) {
 
     while (true) {
         Studentas A;
         int sum = 0;
+        A.paz = nullptr;
+        A.pazkiek = 0;
         cout << "Iveskite studento vardo ir pavarde. Norint baigti studentu ivedima, iveskite 0: " << endl;
         cin >> A.vardas >> A.pavarde;
 
@@ -101,7 +103,14 @@ void inranka(Studentas *&grupe) {
                     break;
                 }
                 if (temp >= 1 && temp <= 10) {
-                    A.paz.push_back(temp);
+                    int* naujas = new int[A.pazKiek + 1];
+                    for (int i = 0; i < A.pazKiek; i++) {
+                        naujas[i] = A.paz[i];
+                    }
+                    naujas[A.pazKiek] = temp;
+                    delete[] A.paz;
+                    A.paz = naujas;
+                    A.pazKiek++;
                     sum += temp;
                 }
                 else {
@@ -126,12 +135,12 @@ void inranka(Studentas *&grupe) {
                 cin.ignore(10000, '\n');
             }
         }
-        int n = A.paz.size();
+        int n = A.pazkiek;
         if (n > 0) {
             A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
         }
 
-        sort(A.paz.begin(), A.paz.end());
+        sort(A.paz, A.paz + n);
         if (n % 2 != 0) {
             A.med = A.paz[n / 2];
             A.med = A.med * 0.4 + A.egz * 0.6;
@@ -142,7 +151,7 @@ void inranka(Studentas *&grupe) {
 
         }
 
-        grupe.push_back(A);
+        pushback(grupe, kiek, A);
     }
 
 }
