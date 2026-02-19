@@ -1,15 +1,13 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <vector>
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
 
 using std::string;
 using std::cin;
-using std::vector;
-using std::cout;
+using std::cout
 using std::left;
 using std::right;
 using std::setw;
@@ -21,23 +19,25 @@ using std::sort;
 
 struct Studentas {
     string vardas, pavarde;
-    vector <int> paz;
+    int *paz;
+    int pazkiek;
     int egz;
     double vid;
     double med;
 };
 
-vector<string> vardai = { "Kazys", "Petriukas", "Alfonsas", "Jonas", "Dziugas", "Algis", "Eugenija", "Agne", "Vitalija","Anastasija" };
-vector<string> pavardes = { "Ilgauskas", "Javtokas", "Katunskyte", "Audrinis", "Milinskas", "Aleksandravicius", "Siskauskas", "Grybauskaite", "Meilutyte", "Cmilyte" };
+const string vardai[10] = { "Kazys", "Petriukas", "Alfonsas", "Jonas", "Dziugas", "Algis", "Eugenija", "Agne", "Vitalija","Anastasija" };
+const string pavardes[10] = { "Ilgauskas", "Javtokas", "Katunskyte", "Audrinis", "Milinskas", "Aleksandravicius", "Siskauskas", "Grybauskaite", "Meilutyte", "Cmilyte" };
 
-void inranka(vector <Studentas>& grupe);
-void randpazymiai(vector <Studentas>& grupe);
-void random(vector <Studentas>& grupe);
-void outputas(const vector <Studentas>& grupe, char& rez);
+void inranka(Studentas *&grupe);
+void randpazymiai(Studentas* &grupe);
+void random(Studentas* &grupe);
+void outputas(const Studentas* &grupe, char& rez);
 
 int main() {
     srand(time(0));
-    vector<Studentas> grupe;
+    Studentas* grupe = nullptr;
+    int kiek = 0;
     char rez;
 
     int pasirinkimas;
@@ -47,25 +47,41 @@ int main() {
     cout << " 3 - generuojami studentai ir pazymiai" << endl;
     cout << " 4 - baigti darba ";
 
-        cin >> pasirinkimas;
-        if (pasirinkimas == 1) {
-            inranka(grupe);
-        }
-        if (pasirinkimas == 2) {
-            randpazymiai(grupe);
-        }
-        if (pasirinkimas == 3) {
-            random(grupe);
-        }
-        if (pasirinkimas == 4) {
-            return 0;
-        }
+    cin >> pasirinkimas;
+    if (pasirinkimas == 1) {
+        inranka(grupe);
+    }
+    if (pasirinkimas == 2) {
+        randpazymiai(grupe);
+    }
+    if (pasirinkimas == 3) {
+        random(grupe);
+    }
+    if (pasirinkimas == 4) {
+        return 0;
+    }
 
-    
     outputas(grupe, rez);
+
+    for (int i = 0; i < kiek; i++) {
+        delete[] grupe[i].paz;
+    }
+    delete[] grupe;
+
+    return 0;
+}
+void pushback(Studentas *&grupe, int &kiek, Studentas &A){
+    Studentas* naujas = new Studentas[kiek + 1];
+    for (int i = 0; i < kiek; i++) {
+        naujas[i] = grupe[i];
+    }
+    naujas[kiek] = A;
+    delete[] grupe;
+    grupe = naujas;
+    kiek++;
 }
 
-void inranka(vector <Studentas>& grupe) {
+void inranka(Studentas *&grupe) {
 
     while (true) {
         Studentas A;
@@ -126,9 +142,9 @@ void inranka(vector <Studentas>& grupe) {
 
         }
 
-    grupe.push_back(A);
-    } 
-    
+        grupe.push_back(A);
+    }
+
 }
 
 void randpazymiai(vector <Studentas>& grupe) {
@@ -169,55 +185,55 @@ void randpazymiai(vector <Studentas>& grupe) {
             A.med = A.med * 0.4 + A.egz * 0.6;
 
         }
-    grupe.push_back(A);
+        grupe.push_back(A);
     }
 }
 
 
 void random(vector <Studentas>& grupe) {
 
-   
-        Studentas A;
-        int kiek1, sum = 0;
-        cout << "Kiek studentu sugeneruoti? " << endl;
-        cin >> kiek1;
 
-        for (int i = 0; i < kiek1; i++) {
-            A.vardas = vardai[rand() % vardai.size()];
-            A.pavarde = pavardes[rand() % pavardes.size()];
+    Studentas A;
+    int kiek1, sum = 0;
+    cout << "Kiek studentu sugeneruoti? " << endl;
+    cin >> kiek1;
 
-            int kiek;
-            cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: " << endl;
-            cin >> kiek;
+    for (int i = 0; i < kiek1; i++) {
+        A.vardas = vardai[rand() % vardai.size()];
+        A.pavarde = pavardes[rand() % pavardes.size()];
 
-            for (int j = 0; j < kiek; j++) {
-                int rng = rand() % 10 + 1;
-                A.paz.push_back(rng);
-                sum += rng;
-            }
+        int kiek;
+        cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: " << endl;
+        cin >> kiek;
 
-            A.egz = rand() % 10 + 1;
-
-            int n = A.paz.size();
-            if (n > 0) {
-                A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
-            }
-
-            sort(A.paz.begin(), A.paz.end());
-            if (n % 2 != 0) {
-                A.med = A.paz[n / 2];
-                A.med = A.med * 0.4 + A.egz * 0.6;
-            }
-            else if (n > 0) {
-                A.med = (A.paz[n / 2 - 1] + A.paz[n / 2]) / 2.0;
-                A.med = A.med * 0.4 + A.egz * 0.6;
-
-            }
-            grupe.push_back(A);
+        for (int j = 0; j < kiek; j++) {
+            int rng = rand() % 10 + 1;
+            A.paz.push_back(rng);
+            sum += rng;
         }
+
+        A.egz = rand() % 10 + 1;
+
+        int n = A.paz.size();
+        if (n > 0) {
+            A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
+        }
+
+        sort(A.paz.begin(), A.paz.end());
+        if (n % 2 != 0) {
+            A.med = A.paz[n / 2];
+            A.med = A.med * 0.4 + A.egz * 0.6;
+        }
+        else if (n > 0) {
+            A.med = (A.paz[n / 2 - 1] + A.paz[n / 2]) / 2.0;
+            A.med = A.med * 0.4 + A.egz * 0.6;
+
+        }
+        grupe.push_back(A);
+    }
 }
 
-void outputas(const vector<Studentas>& grupe, char &rez) {
+void outputas(const vector<Studentas>& grupe, char& rez) {
     cout << "Rezultata isvesti su mediana(irasyti M arba m) ar vidurkiu(irasyti V arba v): " << endl;
     cin >> rez;
     while (true) {
