@@ -30,9 +30,9 @@ const string vardai[10] = { "Kazys", "Petriukas", "Alfonsas", "Jonas", "Dziugas"
 const string pavardes[10] = { "Ilgauskas", "Javtokas", "Katunskyte", "Audrinis", "Milinskas", "Aleksandravicius", "Siskauskas", "Grybauskaite", "Meilutyte", "Cmilyte" };
 
 void inranka(Studentas *&grupe, int &kiek);
-void randpazymiai(Studentas* &grupe);
-void random(Studentas* &grupe);
-void outputas(const Studentas* &grupe, char& rez);
+void randpazymiai(Studentas* &grupe, int &kiek);
+void random(Studentas* &grupe, int &kiek);
+void outputas(const Studentas* &grupe, char& rez, int &kiek);
 
 int main() {
     srand(time(0));
@@ -49,13 +49,13 @@ int main() {
 
     cin >> pasirinkimas;
     if (pasirinkimas == 1) {
-        inranka(grupe);
+        inranka(grupe, kiek);
     }
     if (pasirinkimas == 2) {
-        randpazymiai(grupe);
+        randpazymiai(grupe, kiek);
     }
     if (pasirinkimas == 3) {
-        random(grupe);
+        random(grupe, kiek);
     }
     if (pasirinkimas == 4) {
         return 0;
@@ -201,9 +201,7 @@ void randpazymiai(Studentas *&grupe, int &kiek) {
     }
 }
 
-
-void random(vector <Studentas>& grupe) {
-
+void random(Studentas *&grupe, int &kiek) {
 
     Studentas A;
     int kiek1, sum = 0;
@@ -211,27 +209,31 @@ void random(vector <Studentas>& grupe) {
     cin >> kiek1;
 
     for (int i = 0; i < kiek1; i++) {
+        int sum = 0;
+        A.paz = nullptr;
+        A.pazkiek = 0;
         A.vardas = vardai[rand() % vardai.size()];
         A.pavarde = pavardes[rand() % pavardes.size()];
 
-        int kiek;
         cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: " << endl;
-        cin >> kiek;
+        cin >> pazkiek;
 
-        for (int j = 0; j < kiek; j++) {
-            int rng = rand() % 10 + 1;
-            A.paz.push_back(rng);
-            sum += rng;
+        A.paz = new int[pazkiek];
+        A.pazkiek = pazkiek;
+
+        for (int j = 0; j < pazkiek; j++) {
+            A.paz[j] = rand() % 10 + 1;
+            sum += A.paz[j];
         }
 
         A.egz = rand() % 10 + 1;
 
-        int n = A.paz.size();
+        int n = A.pazkiek;
         if (n > 0) {
             A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
         }
 
-        sort(A.paz.begin(), A.paz.end());
+        sort(A.paz, A.paz + n);
         if (n % 2 != 0) {
             A.med = A.paz[n / 2];
             A.med = A.med * 0.4 + A.egz * 0.6;
@@ -241,11 +243,11 @@ void random(vector <Studentas>& grupe) {
             A.med = A.med * 0.4 + A.egz * 0.6;
 
         }
-        grupe.push_back(A);
+        pushback(grupe, kiek, A);
     }
 }
 
-void outputas(const vector<Studentas>& grupe, char& rez) {
+void outputas(Studentas *&grupe, char& rez, int kiek) {
     cout << "Rezultata isvesti su mediana(irasyti M arba m) ar vidurkiu(irasyti V arba v): " << endl;
     cin >> rez;
     while (true) {
@@ -260,18 +262,18 @@ void outputas(const vector<Studentas>& grupe, char& rez) {
     }
     if (rez == 'V' || rez == 'v') {
         cout << left << setw(10) << "Vardas" << left << setw(20) << "Pavarde" << left << setw(10) << "vidurkis" << endl;
-        for (auto A : grupe) {
+        for (int i = 0; i < kiek; i++) {
 
-            cout << left << setw(10) << A.vardas << left << setw(20) << A.pavarde;
-            cout << left << setw(10) << fixed << setprecision(2) << A.vid << endl;
+            cout << left << setw(10) << grupe[i].vardas << left << setw(20) << grupe[i].pavarde;
+            cout << left << setw(10) << fixed << setprecision(2) << grupe[i].vid << endl;
         }
     }
     if (rez == 'M' || rez == 'm') {
         cout << left << setw(10) << "Vardas" << left << setw(20) << "Pavarde" << left << setw(10) << "mediana" << endl;
-        for (auto A : grupe) {
+        for (int i = 0; i < kiek; i++) {
 
-            cout << left << setw(10) << A.vardas << left << setw(20) << A.pavarde;
-            cout << setw(10) << fixed << setprecision(2) << A.med << endl;
+            cout << left << setw(10) << grupe[i].vardas << left << setw(20) << grupe[i].pavarde;
+            cout << left << setw(10) << fixed << setprecision(2) << grupe[i].med << endl;
         }
     }
 }
