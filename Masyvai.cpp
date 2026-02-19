@@ -156,35 +156,38 @@ void inranka(Studentas *&grupe, int &kiek) {
 
 }
 
-void randpazymiai(vector <Studentas>& grupe) {
+void randpazymiai(Studentas *&grupe, int &kiek) {
 
     while (true) {
         Studentas A;
         int sum = 0;
+        A.paz = nullptr;
+        A.pazkiek = 0;
         cout << "Iveskite studento vardo ir pavarde. Norint baigti studentu ivedima, iveskite 0: " << endl;
         cin >> A.vardas >> A.pavarde;
 
         if (A.vardas == "0" || A.pavarde == "0") {
             break;
         }
-        int kiek;
         cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: " << endl;
-        cin >> kiek;
+        cin >> pazkiek;
+
+        A.paz = new int[pazkiek];
+        A.pazkiek = pazkiek;
 
         for (int i = 0; i < kiek; i++) {
-            int rng = rand() % 10 + 1;
-            A.paz.push_back(rng);
-            sum += rng;
+            A.paz[i]= rand() % 10 + 1;
+            sum += A.paz[i];
         }
 
         A.egz = rand() % 10 + 1;
 
-        int n = A.paz.size();
+        int n = A.pazkiek;
         if (n > 0) {
             A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
         }
 
-        sort(A.paz.begin(), A.paz.end());
+        sort(A.paz, A.paz + n);
         if (n % 2 != 0) {
             A.med = A.paz[n / 2];
             A.med = A.med * 0.4 + A.egz * 0.6;
@@ -194,7 +197,7 @@ void randpazymiai(vector <Studentas>& grupe) {
             A.med = A.med * 0.4 + A.egz * 0.6;
 
         }
-        grupe.push_back(A);
+        pushback(grupe, kiek, A);
     }
 }
 
