@@ -110,12 +110,14 @@ void inranka(vector <Studentas>& grupe) {
             }
         }
         int n = A.paz.size();
-        A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
+        if (n > 0) {
+            A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
+        }
 
         sort(A.paz.begin(), A.paz.end());
         if (n % 2 != 0) {
             A.med = A.paz[n / 2];
-            A.med = A.paz[n / 2];
+            A.med = A.med * 0.4 + A.egz * 0.6;
         }
         else if (n > 0) {
             A.med = (A.paz[n / 2 - 1] + A.paz[n / 2]) / 2.0;
@@ -152,7 +154,9 @@ void randpazymiai(vector <Studentas>& grupe) {
         A.egz = rand() % 10 + 1;
 
         int n = A.paz.size();
-        A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
+        if (n > 0) {
+            A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
+        }
 
         sort(A.paz.begin(), A.paz.end());
         if (n % 2 != 0) {
@@ -164,54 +168,55 @@ void randpazymiai(vector <Studentas>& grupe) {
             A.med = A.med * 0.4 + A.egz * 0.6;
 
         }
-        grupe.push_back(A);
+    grupe.push_back(A);
     }
 }
 
 
 void random(vector <Studentas>& grupe) {
 
-    while (true) {
+   
         Studentas A;
-        int sum = 0;
-        cout << "Iveskite studento vardo ir pavarde. Norint baigti studentu ivedima, iveskite 0: ";
-        cin >> A.vardas >> A.pavarde;
+        int kiek1, sum = 0;
+        cout << "Kiek studentu sugeneruoti? ";
+        cin >> kiek1;
 
-        if (A.vardas == "0" || A.pavarde == "0") {
-            break;
+        for (int i = 0; i < kiek1; i++) {
+            A.vardas = vardai[rand() % vardai.size()];
+            A.pavarde = pavardes[rand() % pavardes.size()];
+
+            int kiek;
+            cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: ";
+            cin >> kiek;
+
+            for (int j = 0; j < kiek; j++) {
+                int rng = rand() % 10 + 1;
+                A.paz.push_back(rng);
+                sum += rng;
+            }
+
+            A.egz = rand() % 10 + 1;
+
+            int n = A.paz.size();
+            if (n > 0) {
+                A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
+            }
+
+            sort(A.paz.begin(), A.paz.end());
+            if (n % 2 != 0) {
+                A.med = A.paz[n / 2];
+                A.med = A.med * 0.4 + A.egz * 0.6;
+            }
+            else if (n > 0) {
+                A.med = (A.paz[n / 2 - 1] + A.paz[n / 2]) / 2.0;
+                A.med = A.med * 0.4 + A.egz * 0.6;
+
+            }
+            grupe.push_back(A);
         }
-        int kiek;
-        cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: ";
-        cin >> kiek;
-
-        for (int i = 0; i < kiek; i++) {
-            int rng = rand() % 10 + 1;
-            A.paz.push_back(rng);
-            sum += rng;
-        }
-
-        A.egz = rand() % 10 + 1;
-
-        int n = A.paz.size();
-        A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
-
-        sort(A.paz.begin(), A.paz.end());
-        if (n % 2 != 0) {
-            A.med = A.paz[n / 2];
-            A.med = A.med * 0.4 + A.egz * 0.6;
-        }
-        else if (n > 0) {
-            A.med = (A.paz[n / 2 - 1] + A.paz[n / 2]) / 2.0;
-            A.med = A.med * 0.4 + A.egz * 0.6;
-
-        }
-        grupe.push_back(A);
-    }
 }
 
 void outputas(const vector<Studentas>& grupe, char &rez) {
-    cin.clear();
-    cin.ignore(10000, '\n');
     cout << "Rezultata isvesti su mediana(irasyti M arba m) ar vidurkiu(irasyti V arba v)";
     cin >> rez;
     while (true) {
@@ -234,7 +239,6 @@ void outputas(const vector<Studentas>& grupe, char &rez) {
     }
     if (rez == 'M' || rez == 'm') {
         cout << left << setw(10) << "Vardas" << left << setw(20) << "Pavarde" << left << setw(10) << "mediana" << endl;
-
         for (auto A : grupe) {
 
             cout << left << setw(10) << A.vardas << left << setw(20) << A.pavarde;
