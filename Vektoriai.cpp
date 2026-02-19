@@ -27,14 +27,19 @@ struct Studentas {
     double med;
 };
 
+vector<string> vardai = { "Kazys", "Petriukas", "Alfonsas", "Jonas", "Dziugas", "Algis", "Eugenija", "Agne", "Vitalija","Anastasija" };
+vector<string> pavardes = { "Ilgauskas", "Javtokas", "Katunskyte", "Audrinis", "Milinskas", "Aleksandravicius", "Siskauskas", "Grybauskaite", "Meilutyte", "Cmilyte" };
+
 void inranka(vector <Studentas>& grupe);
 void randpazymiai(vector <Studentas>& grupe);
+void random(vector <Studentas>& grupe);
 void outputas(const vector <Studentas>& grupe, char& rez);
 
 int main() {
     srand(time(0));
     vector<Studentas> grupe;
     char rez;
+
     int pasirinkimas;
     cout << "Pasirinkite kaip bus vykdoma programa: " << endl;
     cout << " 1 - ivedimas ranka" << endl;
@@ -48,6 +53,12 @@ int main() {
     }
     if (pasirinkimas == 2) {
         randpazymiai(grupe);
+    }
+    if (pasirinkimas == 3) {
+        random(grupe);
+    }
+    if (pasirinkimas == 4) {
+        return 0;
     }
 
     outputas(grupe, rez);
@@ -157,6 +168,46 @@ void randpazymiai(vector <Studentas>& grupe) {
     }
 }
 
+
+void random(vector <Studentas>& grupe) {
+
+    while (true) {
+        Studentas A;
+        int sum = 0;
+        cout << "Iveskite studento vardo ir pavarde. Norint baigti studentu ivedima, iveskite 0: ";
+        cin >> A.vardas >> A.pavarde;
+
+        if (A.vardas == "0" || A.pavarde == "0") {
+            break;
+        }
+        int kiek;
+        cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: ";
+        cin >> kiek;
+
+        for (int i = 0; i < kiek; i++) {
+            int rng = rand() % 10 + 1;
+            A.paz.push_back(rng);
+            sum += rng;
+        }
+
+        A.egz = rand() % 10 + 1;
+
+        int n = A.paz.size();
+        A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
+
+        sort(A.paz.begin(), A.paz.end());
+        if (n % 2 != 0) {
+            A.med = A.paz[n / 2];
+            A.med = A.med * 0.4 + A.egz * 0.6;
+        }
+        else if (n > 0) {
+            A.med = (A.paz[n / 2 - 1] + A.paz[n / 2]) / 2.0;
+            A.med = A.med * 0.4 + A.egz * 0.6;
+
+        }
+        grupe.push_back(A);
+    }
+}
 
 void outputas(const vector<Studentas>& grupe, char &rez) {
     cin.clear();
