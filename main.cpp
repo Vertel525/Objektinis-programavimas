@@ -43,20 +43,57 @@ void inputas(vector <Studentas>& grupe, char& c) {
         cin >> A.vardas >> A.pavarde;
         cout << "Iveskite semestro ivercius. Kiek ju bus? ";
         int n, sum = 0;
-        cin >> n;
+        while(true){
+            if (cin >> n && n >= 0) {
+                break;
+            }
+            else {
+                cout << "Neteisingas ivedimas, iveskite teigiama skaiciu: ";
+                cin.clear();
+                cin.ignore(10000, '\n');
+            }
+        }
         for (int i = 0; i < n; i++) {
             int temp;
             cout << "Iveskite " << i + 1 << " pazymi is " << n << ": ";
-            cin >> temp;
+            while (true) {
+                if (cin >> temp && temp >= 1 && temp <= 10) {
+                    break;
+                }
+                else {
+                    cout << "Neteisingas ivedimas, iveskite skaiciu nuo 1 iki 10: ";
+                    cin.clear();
+                    cin.ignore(10000, '\n');
+                }
+            }
             A.paz.push_back(temp); sum += temp;
         }
-        cout << "Iveskite egzamina: "; cin >> A.egz;
+        cout << "Iveskite egzamina: ";
+        while (true) {
+            if (cin >> A.egz && A.egz >= 1 && A.egz <= 10) {
+                break;
+            }
+            else {
+                cout << "Neteisingas ivedimas, iveskite skaiciu nuo 1 iki 10: ";
+                cin.clear();
+                cin.ignore(10000, '\n');
+            }
+        }
         A.vid = sum * 1.0 / (n * 1.0) * 0.4 + A.egz * 0.6;
         grupe.push_back(A);
         A.paz.clear();
     }
-    cout << "Rezultata isvesti su mediana(irašyti M arba m) ar vidurkiu(irašyti V arba v)";
-    cin >> c;
+    cout << "Rezultata isvesti su mediana(irasyti M arba m) ar vidurkiu(irasyti V arba v)";
+    while (true) {
+        if (cin >> c && c == 'V' || c == 'v' || c == 'M' || c == 'm') {
+            break;
+        }
+        else {
+            cout << "Neteisingas ivedimas, iveskite v arba m: ";
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
 
 }
 
@@ -74,15 +111,18 @@ void mediana(vector<Studentas>& grupe)
 
 
 }
-void outputas(const vector<Studentas>& grupe, char c) {
+void outputas(const vector<Studentas>& grupe, char c) {;
     if (c == 'V' || c == 'v') {
+        cout << left << setw(10) << "Vardas" << left << setw(20) << "Pavarde" << left << setw(10) << "vidurkis" << endl;
         for (auto A : grupe) {
 
             cout << left << setw(10) << A.vardas << left << setw(20) << A.pavarde;
-            cout << setw(10) << fixed << setprecision(2) << A.vid << endl;
+            cout << left << setw(10) << fixed << setprecision(2) << A.vid << endl;
         }
     }
     if (c == 'M' || c == 'm') {
+        cout << left << setw(10) << "Vardas" << left << setw(20) << "Pavarde" << left << setw(10) << "mediana" << endl;
+
         for (auto A : grupe) {
 
             cout << left << setw(10) << A.vardas << left << setw(20) << A.pavarde;
