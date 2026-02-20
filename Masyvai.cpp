@@ -142,8 +142,7 @@ void inranka(Studentas *&grupe, int &kiek) {
 
         sort(A.paz, A.paz + n);
         if (n % 2 != 0) {
-            A.med = A.paz[n / 2];
-            A.med = A.med * 0.4 + A.egz * 0.6;
+            A.med = A.paz[n / 2] * 0.4 + A.egz * 0.6;
         }
         else if (n > 0) {
             A.med = (A.paz[n / 2 - 1] + A.paz[n / 2]) / 2.0;
@@ -176,7 +175,7 @@ void randpazymiai(Studentas *&grupe, int &kiek) {
         A.paz = new int[pazkiek];
         A.pazkiek = pazkiek;
 
-        for (int i = 0; i < kiek; i++) {
+        for (int i = 0; i < pazkiek; i++) {
             A.paz[i]= rand() % 10 + 1;
             sum += A.paz[i];
         }
@@ -190,8 +189,7 @@ void randpazymiai(Studentas *&grupe, int &kiek) {
 
         sort(A.paz, A.paz + n);
         if (n % 2 != 0) {
-            A.med = A.paz[n / 2];
-            A.med = A.med * 0.4 + A.egz * 0.6;
+            A.med = A.paz[n / 2] * 0.4 + A.egz * 0.6;
         }
         else if (n > 0) {
             A.med = (A.paz[n / 2 - 1] + A.paz[n / 2]) / 2.0;
