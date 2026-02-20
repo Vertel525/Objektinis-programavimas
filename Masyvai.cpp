@@ -7,7 +7,7 @@
 
 using std::string;
 using std::cin;
-using std::cout
+using std::cout;
 using std::left;
 using std::right;
 using std::setw;
@@ -30,9 +30,9 @@ const string vardai[10] = { "Kazys", "Petriukas", "Alfonsas", "Jonas", "Dziugas"
 const string pavardes[10] = { "Ilgauskas", "Javtokas", "Katunskyte", "Audrinis", "Milinskas", "Aleksandravicius", "Siskauskas", "Grybauskaite", "Meilutyte", "Cmilyte" };
 
 void inranka(Studentas *&grupe, int &kiek);
-void randpazymiai(Studentas* &grupe, int &kiek);
-void random(Studentas* &grupe, int &kiek);
-void outputas(const Studentas* &grupe, char& rez, int &kiek);
+void randpazymiai(Studentas *&grupe, int &kiek);
+void random(Studentas *&grupe, int &kiek);
+void outputas(Studentas *grupe, char& rez, int kiek);
 
 int main() {
     srand(time(0));
@@ -61,7 +61,7 @@ int main() {
         return 0;
     }
 
-    outputas(grupe, rez);
+    outputas(grupe, rez, kiek);
 
     for (int i = 0; i < kiek; i++) {
         delete[] grupe[i].paz;
@@ -103,14 +103,14 @@ void inranka(Studentas *&grupe, int &kiek) {
                     break;
                 }
                 if (temp >= 1 && temp <= 10) {
-                    int* naujas = new int[A.pazKiek + 1];
-                    for (int i = 0; i < A.pazKiek; i++) {
+                    int* naujas = new int[A.pazkiek + 1];
+                    for (int i = 0; i < A.pazkiek; i++) {
                         naujas[i] = A.paz[i];
                     }
-                    naujas[A.pazKiek] = temp;
+                    naujas[A.pazkiek] = temp;
                     delete[] A.paz;
                     A.paz = naujas;
-                    A.pazKiek++;
+                    A.pazkiek++;
                     sum += temp;
                 }
                 else {
@@ -169,6 +169,7 @@ void randpazymiai(Studentas *&grupe, int &kiek) {
         if (A.vardas == "0" || A.pavarde == "0") {
             break;
         }
+        int pazkiek;
         cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: " << endl;
         cin >> pazkiek;
 
@@ -212,9 +213,10 @@ void random(Studentas *&grupe, int &kiek) {
         int sum = 0;
         A.paz = nullptr;
         A.pazkiek = 0;
-        A.vardas = vardai[rand() % vardai.size()];
-        A.pavarde = pavardes[rand() % pavardes.size()];
+        A.vardas = vardai[rand() % 10];
+        A.pavarde = pavardes[rand() % 10];
 
+        int pazkiek;
         cout << "Iveskite kiek norite atsitiktinai sugeneruotu pazymiu: " << endl;
         cin >> pazkiek;
 
@@ -247,7 +249,7 @@ void random(Studentas *&grupe, int &kiek) {
     }
 }
 
-void outputas(Studentas *&grupe, char& rez, int kiek) {
+void outputas(Studentas *grupe, char& rez, int kiek) {
     cout << "Rezultata isvesti su mediana(irasyti M arba m) ar vidurkiu(irasyti V arba v): " << endl;
     cin >> rez;
     while (true) {
