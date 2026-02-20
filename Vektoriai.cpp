@@ -176,13 +176,13 @@ void randpazymiai(vector <Studentas>& grupe) {
 
 void random(vector <Studentas>& grupe) {
 
-   
-        Studentas A;
-        int kiek1, sum = 0;
+        int kiek1;
         cout << "Kiek studentu sugeneruoti? " << endl;
         cin >> kiek1;
 
         for (int i = 0; i < kiek1; i++) {
+            Studentas A;
+            int sum = 0;
             A.vardas = vardai[rand() % vardai.size()];
             A.pavarde = pavardes[rand() % pavardes.size()];
 
