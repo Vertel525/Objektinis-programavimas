@@ -7,6 +7,8 @@
 #include <ctime>
 #include <sstream>
 #include <fstream>
+#include <chrono>
+
 
 using std::string;
 using std::cin;
@@ -69,10 +71,27 @@ int main() {
         return 0;
     }
     if (pasirinkimas == 5) {
+        auto start = std::chrono::high_resolution_clock::now();
+
         skaityti(grupe, failas);
+
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> diff = end - start;
+
+        cout << "Failo nuskaitymas uztruko: "
+            << fixed << setprecision(4) << diff.count() << " s" << endl;
     }
 
+    auto startSort = std::chrono::high_resolution_clock::now();
+
     rikiuoti(grupe);
+
+    auto endSort = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diffSort = endSort - startSort;
+
+    cout << "Rikiavimas uztruko: "
+        << fixed << setprecision(4) << diffSort.count() << " s" << endl;
+
     outputas(grupe, rez);
 }
 
