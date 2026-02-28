@@ -319,30 +319,34 @@ void rikiuoti(vector<Studentas>& grupe) {
     cout << " 2 - pavarde" << endl;
     cout << " 3 - galutini (vidurkis)" << endl;
     cout << " 4 - galutini (mediana)" << endl;
-    while (true) {
 
+    while (true) {
         int r;
         cin >> r;
 
         if (r == 1) {
             sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) {
                 return a.vardas < b.vardas;
-                });
+            });
+            break;
         }
         else if (r == 2) {
             sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) {
                 return a.pavarde < b.pavarde;
-                });
+            });
+            break;
         }
         else if (r == 3) {
             sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) {
                 return a.vid < b.vid;
-                });
+            });
+            break;
         }
         else if (r == 4) {
             sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) {
                 return a.med < b.med;
-                });
+            });
+            break;
         }
         else {
             cout << "Neteisinga ivestis, iveskite skaicius 1-4" << endl;
