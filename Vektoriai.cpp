@@ -37,12 +37,13 @@ void inranka(vector <Studentas>& grupe);
 void randpazymiai(vector <Studentas>& grupe);
 void random(vector <Studentas>& grupe);
 void outputas(const vector <Studentas>& grupe, char& rez);
-void skaityti(vector <Studentas>& grupe);
+void skaityti(vector <Studentas>& grupe, string &failas);
 
 int main() {
     srand(time(0));
     vector<Studentas> grupe;
     char rez;
+    string failas;
 
     int pasirinkimas;
     cout << "Pasirinkite kaip bus vykdoma programa: " << endl;
@@ -66,7 +67,7 @@ int main() {
         return 0;
     }
     if (pasirinkimas == 5) {
-        skaityti(grupe);
+        skaityti(grupe, failas);
     }
 
 
@@ -255,12 +256,17 @@ void outputas(const vector<Studentas>& grupe, char& rez) {
         }
     }
 }
-void skaityti(vector <Studentas>& grupe, string failas)
+void skaityti(vector <Studentas>& grupe, string& failas)
 {
     cout << "Iveskite failo pavadinima: ";
     cin >> failas;
 
     ifstream in(failas);
+    if (!in) {
+        cout << "Nepavyko atidaryti failo: " << failas << endl;
+        return;
+    }
+
     string line;
     getline(in, line);
 
@@ -274,17 +280,16 @@ void skaityti(vector <Studentas>& grupe, string failas)
         int x;
 
         vector<int> visi;
-        while (in >> x)
-        {
+        while (in >> x) {
             visi.push_back(x);
             if (in.peek() == '\n') break;
-
         }
+
         if (visi.size() == 0) continue;
 
-        A.egz == visi.back();
+        A.egz = visi.back();
         visi.pop_back();
-        A.paz == visi;
+        A.paz = visi;
 
         int n = A.paz.size();
         for (int k : A.paz) sum += k;
@@ -303,14 +308,5 @@ void skaityti(vector <Studentas>& grupe, string failas)
         A.med = A.med * 0.4 + A.egz * 0.6;
 
         grupe.push_back(A);
-
     }
-
-
-
-
-
-
-
-
 }
