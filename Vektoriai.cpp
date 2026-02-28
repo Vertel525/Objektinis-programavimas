@@ -314,14 +314,14 @@ void outputas(const vector<Studentas>& grupe, char& rez) {
 }
 
 
-void skaityti(vector <Studentas>& grupe, string& failas)
+void skaityti(vector<Studentas>& grupe, string& failas)
 {
     cout << "Iveskite failo pavadinima: ";
     cin >> failas;
 
     grupe.clear();
 
-    ifstream in(failas);
+    std::ifstream in(failas);
     if (!in) {
         cout << "Nepavyko atidaryti failo: " << failas << endl;
         return;
@@ -330,22 +330,24 @@ void skaityti(vector <Studentas>& grupe, string& failas)
     string line;
     getline(in, line);
 
-    while (true) {
+    while (getline(in, line)) {
+        if (line.empty()) continue;
+
+        std::istringstream iss(line);
         Studentas A;
         int sum = 0;
 
-        if (!(in >> A.vardas >> A.pavarde)) break;
+        iss >> A.vardas >> A.pavarde;
 
         A.paz.clear();
         int x;
-
         vector<int> visi;
-        while (in >> x) {
+
+        while (iss >> x) {
             visi.push_back(x);
-            if (in.peek() == '\n') break;
         }
 
-        if (visi.size() == 0) continue;
+        if (visi.empty()) continue;
 
         A.egz = visi.back();
         visi.pop_back();
@@ -355,7 +357,7 @@ void skaityti(vector <Studentas>& grupe, string& failas)
         for (int k : A.paz) sum += k;
 
         if (n > 0) {
-            A.vid = (sum * 1.0) / (n * 1.0) * 0.4 + A.egz * 0.6;
+            A.vid = (sum * 1.0) / n * 0.4 + A.egz * 0.6;
         }
 
         sort(A.paz.begin(), A.paz.end());
@@ -369,6 +371,8 @@ void skaityti(vector <Studentas>& grupe, string& failas)
 
         grupe.push_back(A);
     }
+
+    cout << "Nuskaityta studentu: " << grupe.size() << endl;
 }
 void rikiuoti(vector<Studentas>& grupe) {
     cout << "Rikiuoti pagal: " << endl;
