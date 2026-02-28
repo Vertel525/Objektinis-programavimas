@@ -20,6 +20,7 @@ using std::fixed;
 using std::setprecision;
 using std::sort;
 using std::ifstream;
+using std::ofstream;
 
 
 struct Studentas {
@@ -226,37 +227,74 @@ void random(vector <Studentas>& grupe) {
         grupe.push_back(A);
     }
 }
-
 void outputas(const vector<Studentas>& grupe, char& rez) {
-    cout << "Rezultata isvesti su mediana(irasyti M arba m) ar vidurkiu(irasyti V arba v): " << endl;
+    cout << "Rezultata isvesti su mediana (M/m) ar vidurkiu (V/v): " << endl;
     while (true) {
         cin >> rez;
-        if (rez == 'V' || rez == 'v' || rez == 'M' || rez == 'm') {
-            break;
-        }
+        if (rez == 'V' || rez == 'v' || rez == 'M' || rez == 'm') break;
         else {
             cout << "Neteisingas ivedimas, iveskite v arba m: " << endl;
             cin.clear();
             cin.ignore(10000, '\n');
         }
     }
-    if (rez == 'V' || rez == 'v') {
-        cout << left << setw(10) << "Vardas" << left << setw(20) << "Pavarde" << left << setw(10) << "vidurkis" << endl;
-        for (auto A : grupe) {
 
-            cout << left << setw(10) << A.vardas << left << setw(20) << A.pavarde;
-            cout << left << setw(10) << fixed << setprecision(2) << A.vid << endl;
+    cout << "Kur isvesti rezultatus?" << endl;
+    cout << " 1 - i ekrana" << endl;
+    cout << " 2 - i CSV faila" << endl;
+
+    int kur;
+    cin >> kur;
+
+    if (kur == 1) {
+        if (rez == 'V' || rez == 'v') {
+            cout << left << setw(10) << "Vardas" << left << setw(20) << "Pavarde" << left << setw(10) << "Vidurkis" << endl;
+
+            for (auto A : grupe) {
+                cout << left << setw(10) << A.vardas << left << setw(20) << A.pavarde << left << setw(10) << fixed << setprecision(2) << A.vid << endl;
+            }
+        }
+        else {
+            cout << left << setw(10) << "Vardas" << left << setw(20) << "Pavarde" << left << setw(10) << "Mediana" << endl;
+
+            for (auto A : grupe) {
+                cout << left << setw(10) << A.vardas << left << setw(20) << A.pavarde << left << setw(10) << fixed << setprecision(2) << A.med << endl;
+            }
         }
     }
-    if (rez == 'M' || rez == 'm') {
-        cout << left << setw(10) << "Vardas" << left << setw(20) << "Pavarde" << left << setw(10) << "mediana" << endl;
-        for (auto A : grupe) {
+    else if (kur == 2) {
+        string outfailas;
+        cout << "Iveskite CSV failo pavadinima (pvz: rezultatai.csv): ";
+        cin >> outfailas;
 
-            cout << left << setw(10) << A.vardas << left << setw(20) << A.pavarde;
-            cout << setw(10) << fixed << setprecision(2) << A.med << endl;
+        ofstream out(outfailas);
+        if (!out) {
+            cout << "Nepavyko sukurti CSV failo." <<endl;
+            return;
         }
+
+        if (rez == 'V' || rez == 'v') {
+            out << "Vardas,Pavarde,Vidurkis" << endl;
+            for (auto A : grupe) {
+                out << A.vardas << "," << A.pavarde << "," << fixed << setprecision(2) << A.vid << endl;
+            }
+        }
+        else {
+            out << "Vardas,Pavarde,Mediana" << endl;
+            for (auto A : grupe) {
+                out << A.vardas << "," << A.pavarde << "," << fixed << setprecision(2) << A.med << endl;
+            }
+        }
+
+        out.close();
+        cout << "Rezultatai issaugoti faile: " << outfailas << endl;
+    }
+    else {
+        cout << "Blogas pasirinkimas. Nieko neisvesta.\n";
     }
 }
+
+
 void skaityti(vector <Studentas>& grupe, string& failas)
 {
     cout << "Iveskite failo pavadinima: ";
@@ -327,25 +365,25 @@ void rikiuoti(vector<Studentas>& grupe) {
         if (r == 1) {
             sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) {
                 return a.vardas < b.vardas;
-            });
+                });
             break;
         }
         else if (r == 2) {
             sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) {
                 return a.pavarde < b.pavarde;
-            });
+                });
             break;
         }
         else if (r == 3) {
             sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) {
                 return a.vid < b.vid;
-            });
+                });
             break;
         }
         else if (r == 4) {
             sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) {
                 return a.med < b.med;
-            });
+                });
             break;
         }
         else {
