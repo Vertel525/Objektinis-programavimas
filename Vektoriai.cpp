@@ -8,6 +8,7 @@
 #include <sstream>
 #include <fstream>
 #include <chrono>
+#include "funkcijos.h"
 
 
 using std::string;
@@ -58,28 +59,36 @@ int main() {
     cout << " 5 - nuskaityti failus";
 
     cin >> pasirinkimas;
-    if (pasirinkimas == 1) {
-        inranka(grupe);
-    }
-    if (pasirinkimas == 2) {
-        randpazymiai(grupe);
-    }
-    if (pasirinkimas == 3) {
-        random(grupe);
-    }
-    if (pasirinkimas == 4) {
-        return 0;
-    }
-    if (pasirinkimas == 5) {
-        auto start = std::chrono::high_resolution_clock::now();
+    try {
 
-        skaityti(grupe, failas);
+        if (pasirinkimas == 1) {
+            inranka(grupe);
+        }
+        if (pasirinkimas == 2) {
+            randpazymiai(grupe);
+        }
+        if (pasirinkimas == 3) {
+            random(grupe);
+        }
+        if (pasirinkimas == 4) {
+            return 0;
+        }
+        if (pasirinkimas == 5) {
 
-        auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> diff = end - start;
+            auto start = std::chrono::high_resolution_clock::now();
 
-        cout << "Failo nuskaitymas uztruko: "
-            << fixed << setprecision(4) << diff.count() << " s" << endl;
+            skaityti(grupe, failas);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> diff = end - start;
+
+            cout << "Failo nuskaitymas uztruko: "
+                << fixed << setprecision(4) << diff.count() << " s" << endl;
+        }
+
+    }
+    catch (std::exception& e) {
+        cout << "Klaida: " << e.what() << endl;
     }
 
     auto startSort = std::chrono::high_resolution_clock::now();
