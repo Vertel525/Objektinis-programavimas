@@ -139,6 +139,9 @@ void random(vector <Studentas>& grupe) {
     for (int i = 0; i < kiek1; i++) {
         Studentas A;
         int sum = 0;
+        vector<string> vardai = { "Kazys", "Petriukas", "Alfonsas", "Jonas", "Dziugas", "Algis", "Eugenija", "Agne", "Vitalija","Anastasija" };
+        vector<string> pavardes = { "Ilgauskas", "Javtokas", "Katunskyte", "Audrinis", "Milinskas", "Aleksandravicius", "Siskauskas", "Grybauskaite", "Meilutyte", "Cmilyte" };
+
         A.vardas = vardai[rand() % vardai.size()];
         A.pavarde = pavardes[rand() % pavardes.size()];
 
@@ -341,4 +344,4 @@ void rikiuoti(vector<Studentas>& grupe) {
             cin.ignore(10000, '\n');
         }
     }
-
+}
