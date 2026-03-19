@@ -1,5 +1,9 @@
 #include <iostream>
 #include <chrono>
+#include <vector>      
+#include <string>      
+#include <cstdlib>     
+#include <ctime>       
 #include "funkcijos.h"
 
 using namespace std;
@@ -34,7 +38,16 @@ int main() {
         return 0;
     }
     if (pasirinkimas == 5) {
+
+        auto start = std::chrono::high_resolution_clock::now();
+
         skaityti(grupe, failas);
+
+        auto end = std::chrono::high_resolution_clock::now();
+
+        std::chrono::duration<double> diff = end - start;
+
+        cout << "Failo nuskaitymas uztruko: " << diff.count() << " s" << endl;
     }
 
     rikiuoti(grupe);
