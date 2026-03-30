@@ -1,7 +1,7 @@
 #ifndef FUNKCIJOS_H
 #define FUNKCIJOS_H
 
-#include "studentai.h"
+#include "studentai1.h"
 #include <vector>
 #include <string>
 
@@ -14,5 +14,5 @@ void random(vector<Studentas>& grupe);
 void outputas(const vector<Studentas>& grupe, char& rez);
 void skaityti(vector<Studentas>& grupe, string& failas);
 void rikiuoti(vector<Studentas>& grupe);
-
+void generuotiFaila(int kiek, string failoVardas);
 #endif
