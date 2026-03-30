@@ -56,10 +56,30 @@ int main() {
         outputas(grupe, rez);
     }
     if (pasirinkimas == 6) {
-        generuotiFaila(1000, "1000.txt");
-        generuotiFaila(10000, "10000.txt");
-        generuotiFaila(100000, "100000.txt");
-        generuotiFaila(1000000, "1000000.txt");
-        generuotiFaila(10000000, "10000000.txt");
+      
+    // 1 TYRIMAS (failo kūrimas)
+
+    auto startGen = chrono::high_resolution_clock::now();
+        generuotifaila(1000, "1000.txt");
+        generuotifaila(10000, "10000.txt");
+        generuotifaila(100000, "100000.txt");
+        generuotifaila(1000000, "1000000.txt");
+        generuotifaila(10000000, "10000000.txt");
+    auto endGen = chrono::high_resolution_clock::now();
+
+        cout << "Failo kurimas: " << chrono::duration<double>(endGen - startGen).count()<< " s" <<endl;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     }
 }
