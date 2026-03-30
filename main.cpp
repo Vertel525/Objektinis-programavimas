@@ -4,7 +4,7 @@
 #include <string>      
 #include <cstdlib>     
 #include <ctime>       
-#include "funkcijos.h"
+#include "funkcijos1.h"
 
 using namespace std;
 
@@ -21,7 +21,8 @@ int main() {
     cout << " 2 - generuojami pazymiai" << endl;
     cout << " 3 - generuojami studentai ir pazymiai" << endl;
     cout << " 4 - baigti darba " << endl;
-    cout << " 5 - nuskaityti failus";
+    cout << " 5 - nuskaityti failus" << endl;
+    cout << " 6 - failo generavimas";
 
     cin >> pasirinkimas;
 
@@ -50,6 +51,15 @@ int main() {
         cout << "Failo nuskaitymas uztruko: " << diff.count() << " s" << endl;
     }
 
-    rikiuoti(grupe);
-    outputas(grupe, rez);
+    if (pasirinkimas >= 1 && pasirinkimas <= 5) {
+        rikiuoti(grupe);
+        outputas(grupe, rez);
+    }
+    if (pasirinkimas == 6) {
+        generuotiFaila(1000, "1000.txt");
+        generuotiFaila(10000, "10000.txt");
+        generuotiFaila(100000, "100000.txt");
+        generuotiFaila(1000000, "1000000.txt");
+        generuotiFaila(10000000, "10000000.txt");
+    }
 }
