@@ -14,5 +14,6 @@ void random(vector<Studentas>& grupe);
 void outputas(const vector<Studentas>& grupe, char& rez);
 void skaityti(vector<Studentas>& grupe, string& failas);
 void rikiuoti(vector<Studentas>& grupe);
-void generuotiFaila(int kiek, string failoVardas);
+void generuotifaila(int kiek, string failovardas);
+void skirstyti(const vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai);
 #endif
