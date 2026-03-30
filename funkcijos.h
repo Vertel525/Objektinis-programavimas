@@ -16,4 +16,6 @@ void skaityti(vector<Studentas>& grupe, string& failas);
 void rikiuoti(vector<Studentas>& grupe);
 void generuotifaila(int kiek, string failovardas);
 void skirstyti(const vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai);
+void isvestifaila(const vector<Studentas>& grupe, string failas);
+
 #endif
