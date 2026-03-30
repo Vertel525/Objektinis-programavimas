@@ -346,7 +346,7 @@ void rikiuoti(vector<Studentas>& grupe) {
     }
 }
 
-void generuotiFaila(int kiek, string failovardas) {
+void generuotifaila(int kiek, string failovardas) {
 
     ofstream out(failovardas);
 
@@ -375,4 +375,17 @@ void skirstyti(const vector<Studentas>& grupe, vector<Studentas>& vargsiukai, ve
         else
             kietiakai.push_back(s);
     }
+}
+void isvestifaila(const vector<Studentas>& grupe, string failas) {
+    ofstream out(failas);
+
+    if (!out) {
+        cout << "Nepavyko sukurti failo\n";
+        return;
+    }
+
+    for (auto s : grupe) {
+        out << s.vardas << " " << s.pavarde << " " << s.vid << endl;
+    }
+    out.close();
 }
