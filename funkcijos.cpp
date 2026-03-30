@@ -347,6 +347,7 @@ void rikiuoti(vector<Studentas>& grupe) {
 }
 
 void generuotiFaila(int kiek, string failovardas) {
+
     ofstream out(failovardas);
 
     if (!out) {
@@ -365,4 +366,13 @@ void generuotiFaila(int kiek, string failovardas) {
         }
     }
     out.close();
+}
+void skirstyti(const vector<Studentas>& grupe, vector<Studentas>& vargsiukai, vector<Studentas>& kietiakai) {
+
+    for (auto s : grupe) {
+        if (s.vid < 5.0)
+            vargsiukai.push_back(s);
+        else
+            kietiakai.push_back(s);
+    }
 }
