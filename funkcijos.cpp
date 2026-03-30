@@ -1,4 +1,4 @@
-#include "funkcijos.h"
+#include "funkcijos1.h"
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
@@ -344,4 +344,25 @@ void rikiuoti(vector<Studentas>& grupe) {
             cin.ignore(10000, '\n');
         }
     }
+}
+
+void generuotiFaila(int kiek, string failovardas) {
+    ofstream out(failovardas);
+
+    if (!out) {
+        cout << "Nepavyko sukurti failo\n";
+        return;
+    }
+    out << "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 Egz" << endl;
+    for (int i = 1; i <= kiek; i++) {
+        out << "Vardas" << i << " Pavarde" << i << " ";
+        for (int j = 0; j < 5; j++) {
+            out << rand() % 10 + 1 << " ";
+        }
+        out << rand() % 10 + 1 << "\n";
+        if (i % 100000 == 0) {
+            cout << "Sugeneruota: " << i << endl;
+        }
+    }
+    out.close();
 }
