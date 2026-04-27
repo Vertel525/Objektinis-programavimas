@@ -47,3 +47,10 @@ void testuoti(const string& failas) {
     studentai.clear();
     skaityti(studentai, failas);
     vargsiukai.clear();
+
+    auto s3 = chrono::high_resolution_clock::now();
+    skirstyti3(studentai, vargsiukai);
+    auto e3 = chrono::high_resolution_clock::now();
+
+    cout << "Strategija 3: " << chrono::duration<double>(e3 - s3).count() << endl;
+}
