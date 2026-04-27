@@ -49,8 +49,24 @@ void rikiuoti(Container& grupe) {
 }
 template <typename Container>
 void skirstyti1(const Container& grupe, Container& vargsiukai, Container& kietiakai) {
+
     for (const auto& s : grupe) {
         if (s.vid < 5.0) vargsiukai.push_back(s);
         else kietiakai.push_back(s);
+    }
+}
+template <typename Container>
+void skirstyti2(Container& studentai, Container& vargsiukai) {
+
+    auto it = studentai.begin();
+
+    while (it != studentai.end()) {
+        if (it->vid < 5.0) {
+            vargsiukai.push_back(*it);
+            it = studentai.erase(it);
+        }
+        else {
+            ++it;
+        }
     }
 }
