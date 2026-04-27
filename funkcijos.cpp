@@ -47,3 +47,10 @@ void rikiuoti(Container& grupe) {
     else
         std::sort(grupe.begin(), grupe.end(), cmp);
 }
+template <typename Container>
+void skirstyti1(const Container& grupe, Container& vargsiukai, Container& kietiakai) {
+    for (const auto& s : grupe) {
+        if (s.vid < 5.0) vargsiukai.push_back(s);
+        else kietiakai.push_back(s);
+    }
+}
