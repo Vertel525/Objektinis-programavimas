@@ -70,3 +70,22 @@ void skirstyti2(Container& studentai, Container& vargsiukai) {
         }
     }
 }
+template <typename Container>
+void skirstyti3(Container& studentai, Container& vargsiukai) {
+
+    if constexpr (std::is_same<Container, std::list<Studentas>>::value) {
+        for (auto it = studentai.begin(); it != studentai.end();) {
+            if (it->vid < 5.0)
+                vargsiukai.splice(vargsiukai.end(), studentai, it++);
+            else
+                ++it;
+        }
+    }
+    else {
+        auto it = std::partition(studentai.begin(), studentai.end(),
+            [](const Studentas& s) { return s.vid >= 5.0; });
+
+        vargsiukai.insert(vargsiukai.end(), it, studentai.end());
+        studentai.erase(it, studentai.end());
+    }
+}
