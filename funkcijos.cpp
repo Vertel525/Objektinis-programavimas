@@ -35,3 +35,15 @@ void skaityti(Container& grupe, const std::string& failas) {
         grupe.push_back(A);
     }
 }
+template <typename Container>
+void rikiuoti(Container& grupe) {
+
+    auto cmp = [](const Studentas& a, const Studentas& b) {
+        return a.vid < b.vid;
+    };
+
+    if constexpr (std::is_same<Container, std::list<Studentas>>::value)
+        grupe.sort(cmp);
+    else
+        std::sort(grupe.begin(), grupe.end(), cmp);
+}
