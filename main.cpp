@@ -27,3 +27,13 @@ void testuoti(const string& failas) {
     auto t4 = chrono::high_resolution_clock::now();
 
     cout << "Rikiavimas: " << chrono::duration<double>(t4 - t3).count() << endl;
+
+    auto s1 = chrono::high_resolution_clock::now();
+    skirstyti1(studentai, vargsiukai, kietiakai);
+    auto e1 = chrono::high_resolution_clock::now();
+
+    cout << "Strategija 1: " << chrono::duration<double>(e1 - s1).count() << endl;
+
+    studentai.clear();
+    skaityti(studentai, failas);
+    vargsiukai.clear();
