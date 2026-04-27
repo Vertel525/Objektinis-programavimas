@@ -1,11 +1,8 @@
-#include "funkcijos1.h"
-#include <iostream>
-#include <iomanip>
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <sstream>
 #include <fstream>
+#include <sstream>
+#include <iostream>
+#include <algorithm>
+#include <type_traits>
 
 using std::string;
 using std::cin;
@@ -20,6 +17,7 @@ using std::setprecision;
 using std::sort;
 using std::ifstream;
 using std::ofstream;
+using std::stringstream;
 
 void inranka(vector <Studentas>& grupe) {
 
@@ -243,62 +241,63 @@ void outputas(const vector<Studentas>& grupe, char& rez) {
 }
 
 
-void skaityti(vector<Studentas>& grupe, string& failas)
-{
-    cout << "Iveskite failo pavadinima: ";
-    cin >> failas;
+void skaityti(vector<Studentas>& grupe, string& failas) {
+    ifstream input(failas);
 
-    grupe.clear();
-
-    std::ifstream in(failas);
-    if (!in) {
+    if (!input.is_open()) {
         cout << "Nepavyko atidaryti failo: " << failas << endl;
         return;
     }
 
-    string line;
-    getline(in, line);
+    grupe.clear();
 
-    while (getline(in, line)) {
-        if (line.empty()) continue;
+    string eilute;
+    getline(input, eilute);
 
-        std::istringstream iss(line);
-        Studentas A;
-        int sum = 0;
+    while (getline(input, eilute)) {
+        if (eilute.empty()) continue;
 
-        iss >> A.vardas >> A.pavarde;
+        stringstream ss(eilute);
+        Studentas s;
+        ss >> s.vardas >> s.pavarde;
 
-        A.paz.clear();
+        if (s.vardas.empty() || s.pavarde.empty()) continue;
+
+        s.paz.clear();
         int x;
-        vector<int> visi;
-
-        while (iss >> x) {
-            visi.push_back(x);
+        vector<int> pazymiai;
+        while (ss >> x) {
+            pazymiai.push_back(x);
         }
 
-        if (visi.empty()) continue;
+        if (pazymiai.size() < 6) {
+            cout << "Klaida eiluteje: nepakankamai pazymiu\n";
+            continue;
+        }
 
-        A.egz = visi.back();
-        visi.pop_back();
-        A.paz = visi;
+        s.egz = pazymiai.back();  
+        pazymiai.pop_back();
+        s.paz = pazymiai;
 
-        int n = A.paz.size();
-        for (int k : A.paz) sum += k;
-
+        int sum = 0;
+        for (auto p : s.paz) sum += p;
+        int n = s.paz.size();
         if (n > 0) {
-            A.vid = (sum * 1.0) / n * 0.4 + A.egz * 0.6;
+            s.vid = sum * 1.0 / n * 0.4 + s.egz * 0.6;
+        }
+        else {
+            s.vid = s.egz; 
         }
 
-        sort(A.paz.begin(), A.paz.end());
-        if (n % 2 != 0) {
-            A.med = A.paz[n / 2];
-        }
-        else if (n > 0) {
-            A.med = (A.paz[n / 2 - 1] + A.paz[n / 2]) / 2.0;
-        }
-        A.med = A.med * 0.4 + A.egz * 0.6;
+        sort(s.paz.begin(), s.paz.end());
+        if (n % 2 != 0)
+            s.med = s.paz[n / 2];
+        else
+            s.med = (s.paz[n / 2 - 1] + s.paz[n / 2]) / 2.0;
 
-        grupe.push_back(A);
+        s.med = s.med * 0.4 + s.egz * 0.6;
+
+        grupe.push_back(s);
     }
 
     cout << "Nuskaityta studentu: " << grupe.size() << endl;
@@ -311,8 +310,8 @@ void rikiuoti(vector<Studentas>& grupe) {
     cout << " 4 - galutini (mediana)" << endl;
 
     while (true) {
-        int r;
-        cin >> r;
+        int r = 4;
+        
 
         if (r == 1) {
             sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) {
