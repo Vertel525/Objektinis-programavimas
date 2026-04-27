@@ -4,15 +4,12 @@
 #include <string>
 #include <vector>
 
-using std::string;
-using std::vector;
-
 struct Studentas {
-    string vardas, pavarde;
-    vector<int> paz;
-    int egz;
-    double vid;
-    double med;
+    std::string vardas, pavarde;
+    std::vector<int> paz;
+    int egz = 0;
+    double vid = 0.0;
+    double med = 0.0;
 };
 
 #endif
