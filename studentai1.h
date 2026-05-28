@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 
 struct Studentas {
     std::string vardas, pavarde;
@@ -11,21 +12,21 @@ struct Studentas {
     double vid = 0.0;
     double med = 0.0;
 
-
     void skaiciuoti() {
-        if (paz.empty()) return;
+        int n = (int)paz.size();
+        if (n == 0) return;
 
-        double sum = 0;
+        int sum = 0;
         for (int x : paz) sum += x;
+        vid = sum * 1.0 / n * 0.4 + egz * 0.6;
 
-        vid = (sum / paz.size()) * 0.4 + egz * 0.6;
+        std::vector<int> sorted = paz;
+        std::sort(sorted.begin(), sorted.end());
 
-        std::sort(paz.begin(), paz.end());
-
-        if (paz.size() % 2 == 0)
-            med = (paz[paz.size() / 2 - 1] + paz[paz.size() / 2]) / 2.0;
+        if (n % 2 != 0)
+            med = sorted[n / 2];
         else
-            med = paz[paz.size() / 2];
+            med = (sorted[n / 2 - 1] + sorted[n / 2]) / 2.0;
 
         med = med * 0.4 + egz * 0.6;
     }
