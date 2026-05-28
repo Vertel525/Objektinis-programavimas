@@ -1,49 +1,186 @@
-1 Tyrimas
+# Studentų Registras v1.0
 
-| Studentų kiekis | Failo kūrimo laikas (s)|
-|-----------------|------------------------|
-| 1 000           | 0.0122                 |
-| 10 000          | 0.1202                 |
-| 100 000         | 1.1788                 |
-| 1 000 000       | 11.9464                |
-| 10 000 000      | 137.331                |
---------------------------------------------
+Programa skirta studentų duomenų apdorojimui ir analizavimui. Vartotojas gali:
+- įvesti studentų duomenis ranka;
+- automatiškai sugeneruoti pažymius arba studentų įrašus;
+- nuskaityti studentų duomenis iš failo;
+- sugeneruoti testinius failus;
+- atlikti skirtingų konteinerių ir studentų skirstymo strategijų veikimo spartos tyrimą.
 
-2 Tyrimas
+Programoje realizuotos trys studentų skirstymo strategijos, kurių veikimo laikas lyginamas su skirtingo dydžio duomenų failais naudojant `vector`, `list` ir `deque` konteinerius.
 
-| Studentų kiekis | Nuskaitymas (s) | Rūšiavimas (s) | Išvedimas (s) | Bendras (s)|
-|-----------------|-----------------|----------------|---------------|------------|
-| 1 000           | 0.04234         | 0.01100        | 0.01034       | 0.08298    |
-| 10 000          | 0.41755         | 0.10340        | 0.10328       | 0.75706    |
-| 100 000         | 4.38103         | 1.012          | 0.97991       | 7.76007    |
-| 1 000 000       | 42.2619         | 10.5619        | 9,78172       | 74.2777    |
-| 10 000 000      | ---------       | -------        | --------      | --------   |
------------------------------------------------------------------------------------
+---
 
+## Versijų istorija
 
+| Versija | Aprašymas |
+|---------|-----------|
+| v0.1 | Pradinis veikiantis variantas — rankinis įvedimas, skaičiavimas, išvedimas |
+| v0.2 | Nuskaitymas iš failo, rūšiavimas, skirstymas į dvi grupes |
+| v0.3 | Failų generavimas, testavimas su dideliais duomenų kiekiais |
+| v0.4 | Optimizuotas skirstymas, patobulintas išvedimas į failą |
+| v1.0 | Pridėtas `std::list` ir `std::deque` palaikymas, 3 skirstymo strategijos, greičio tyrimas |
 
+---
 
-Nuotraukos:
+## Įdiegimo instrukcija
 
-1 Tyrimas
-<img width="507" height="49" alt="Screenshot 2026-03-30 151443" src="https://github.com/user-attachments/assets/3a0d950b-fe76-4153-9897-20b65c16580c" /> 1000 studentų failas
-<img width="511" height="60" alt="Screenshot 2026-03-30 151638" src="https://github.com/user-attachments/assets/50d1cbd7-ce17-41ef-93b9-4c89f0d9e01d" /> 10000 studentų failas
-<img width="455" height="57" alt="Screenshot 2026-03-30 151728" src="https://github.com/user-attachments/assets/dffd05a0-0173-4ec6-ad3b-698cf6122e46" /> 100000 studentų failas
-<img width="485" height="43" alt="Screenshot 2026-03-30 151823" src="https://github.com/user-attachments/assets/05458e8f-395f-42b1-aa00-e532f905744a" /> 1000000 studentų failas
-<img width="490" height="55" alt="image" src="https://github.com/user-attachments/assets/553e308b-d59d-49a6-bbe5-26115ca69679" /> 10000000 studentų failas
+### Reikalavimai
+- C++17 palaikantis kompiliatorius (GCC 8+, MSVC 2019+, Clang 7+)
+- CMake 3.16+
 
+### Kompiliavimas su CMake
 
+```bash
+git clone https://github.com/Vertel525/Objektinis-programavimas
+cd Objektinis-programavimas
+mkdir build && cd build
+cmake ..
+cmake --build . --config Release
+```
 
-2 Tyrimas
-<img width="796" height="411" alt="image" src="https://github.com/user-attachments/assets/810812d1-f2d9-4f1c-98ec-86a30b6d7101" />
-<img width="799" height="199" alt="image" src="https://github.com/user-attachments/assets/39ae3099-8876-457b-928f-fb32c224c266" />
-<img width="997" height="415" alt="image" src="https://github.com/user-attachments/assets/2259cccd-e904-4a56-80ea-0400f29e8226" />
-<img width="1073" height="412" alt="image" src="https://github.com/user-attachments/assets/0f2360a1-df0e-4d0e-866e-58b4aa629dcb" />
+### Paleidimas
 
+```bash
+# Windows
+main1.exe
 
+# Linux / macOS
+./main1
+```
 
+---
 
+## Naudojimosi instrukcija
 
+Paleidus programą pateikiamas meniu:
 
+```
+1 - ivedimas ranka
+2 - generuojami pazymiai
+3 - generuojami studentai ir pazymiai
+4 - baigti darba
+5 - nuskaityti faila (vector)
+6 - failo generavimas ir benchmark
+```
 
+### Režimas 6 — Benchmark
 
+```
+1 - Generuoti failus      (sukuria 1000.txt ... 10000000.txt)
+2 - Paleisti benchmark    (matuoja laiką visiems konteineriams ir strategijoms)
+```
+
+Įvedus `2`, programa paprašys failo pavadinimo ir išmatuos nuskaitymo, rūšiavimo ir visų 3 skirstymo strategijų laiką kiekvienam konteineriui.
+
+---
+
+## Testavimo sistemos parametrai
+
+| Komponentas | Specifikacija |
+|-------------|---------------|
+| CPU | Intel Core i7-13650HX |
+| GPU | NVIDIA RTX 5060 Mobile |
+| RAM | 24 GB |
+| Saugykla | SSD |
+| OS | Windows |
+
+---
+
+## Tyrimo rezultatai
+
+Visi matavimai atlikti su iš anksto sugeneruotais failais (1000, 10000, 100000, 1000000 įrašų).
+Laikas nurodytas sekundėmis.
+
+---
+
+## Konteinerių greičio tyrimas
+
+### Nuskaitymas (skaityti)
+
+| Įrašų sk. | vector | list | deque |
+|-----------|--------|------|-------|
+| 1 000 | 0.0942052 s | 0.0493538 s | 0.0484189 s |
+| 10 000 | 0.528222 s | 0.495995 s | 0.491544 s |
+| 100 000 | 5.0388 s | 8.17166 s | 5.07298 s |
+| 1 000 000 | 68.3341 s | 75.9146 s | 72.9164 s |
+
+### Rūšiavimas (rikiuoti)
+
+| Įrašų sk. | vector | list | deque |
+|-----------|--------|------|-------|
+| 1 000 | 0.0276871 s | 0.0005057 s | 0.032269 s |
+| 10 000 | 0.241124 s | 0.0070069 s | 0.262496 s |
+| 100 000 | 2.39571 s | 0.168299 s | 2.55142 s |
+| 1 000 000 | 31.3452 s | 2.68962 s | 34.5294 s |
+
+---
+
+## Skirstymo strategijų tyrimas
+
+### 1 strategija — du nauji konteineriai (partition_copy)
+
+Studentas lieka bendrame konteineryje **ir** patenka į vieną iš dviejų naujų (`vargšiukai` ir `kietiakai`).
+Neefektyvu atminties atžvilgiu — duomenys dubliuojami, tačiau operacija greita.
+
+| Įrašų sk. | vector | list | deque |
+|-----------|--------|------|-------|
+| 1 000 | 0.0135152 s | 0.0038836 s | 0.0045774 s |
+| 10 000 | 0.141924 s | 0.0406719 s | 0.0408574 s |
+| 100 000 | 1.77447 s | 0.555841 s | 0.410997 s |
+| 1 000 000 | 17.2134 s | 5.53756 s | 5.86204 s |
+
+### 2 strategija — vienas naujas konteineris (copy_if + remove_if)
+
+Vargšiukai perkeliami į naują konteinerį ir **ištrinami** iš bendro.
+Efektyviau atminties atžvilgiu, tačiau dažni trynimai stipriai lėtina `list`.
+
+| Įrašų sk. | vector | list | deque |
+|-----------|--------|------|-------|
+| 1 000 | 0.0028835 s | 0.003627 s | 0.0037777 s |
+| 10 000 | 0.0296754 s | 0.0363959 s | 0.038055 s |
+| 100 000 | 0.461055 s | 0.592309 s | 0.372462 s |
+| 1 000 000 | 3.97545 s | 5.09716 s | 5.8258 s |
+
+### 3 strategija — optimizuota (partition / splice)
+
+- `vector` / `deque`: `std::partition` — vienas praėjimas, jokio papildomo kopijavimo
+- `list`: `splice` — nulinės kopijos, tik rodyklių perstatymas
+
+| Įrašų sk. | vector | list | deque |
+|-----------|--------|------|-------|
+| 1 000 | 0.0038043 s | 0.0011601 s | 0.0042473 s |
+| 10 000 | 0.0375445 s | 0.0119693 s | 0.0446 s |
+| 100 000 | 0.534876 s | 0.117763 s | 0.431631 s |
+| 1 000 000 | 3.71992 s | 1.1785 s | 5.81549 s |
+
+---
+
+## Išvados
+
+### Konteineriai
+
+- **`std::vector`** — greičiausias nuskaitymui dėl gretimos atminties ir `reserve()`. Rūšiavimas su `std::sort` labai greitas. Skirstymas su `std::partition` efektyvus, tačiau 1 strategija lėta dėl didelio kopijavimo kiekio.
+- **`std::list`** — lėčiausias nuskaitymui (nėra `reserve()`, daug atminties alokacijų). Rūšiavimas su `list::sort` paradoksaliai greičiausias iš visų — nes naudoja `merge sort` be elementų kopijavimo. Skirstymas su `splice` (3 strategija) — absoliučiai greičiausias iš visų konteinerių.
+- **`std::deque`** — tarpinis variantas. Nuskaitymas panašus į `vector`, rūšiavimas šiek tiek lėtesnis. Skirstymas 2 strategijoje lėčiausias dėl neefektyvių vidinių blokų.
+
+### Strategijos
+
+- **1 strategija** — lėčiausia dėl atminties dubliavimo (studentas egzistuoja dviejuose konteineriuose vienu metu).
+- **2 strategija** — vidutinė. `vector` atveju greičiau nei 1 strategija, tačiau `list` atveju labai lėta dėl dažnų trynimų.
+- **3 strategija** — greičiausia visais atvejais. `std::partition` `vector`/`deque` atveju ir `splice` `list` atveju leidžia išvengti nereikalingo kopijavimo.
+
+---
+
+## Failo struktūra
+
+```
+.
+├── main1.cpp          # Pagrindinė programa
+├── funkcijos1.h       # Funkcijų deklaracijos
+├── funkcijos1.cpp     # Interaktyvios funkcijos (inranka, outputas ir kt.)
+├── funkcijos1.tpp     # Šabloninės funkcijos (skaityti, rikiuoti, skirstyti...)
+├── studentai1.h       # Studentas struktūra
+├── CMake.txt          # Build failas
+└── README.md
+```
